@@ -1,31 +1,3 @@
-function queryGithub(query){
-
-  var urlStream = Rx.Observable.just('https://api.github.com/search/repositories?q=' + query + '&sort=updated');
-
-  var responseStream = urlStream.flatMap(url => {
-    var request = $.getJSON(url, data => {
-      data.headers = request.getAllResponseHeaders().split('\n');
-      data.items = data.items.map(repo => {
-        return {
-          forks: repo.forks_count,
-          stars: repo.stargazers_count,
-          url: repo.url,
-          name: repo.full_name,
-          description: repo.description || "No description found.",
-          language: repo.language
-        }
-      });
-    });
-    return request;
-  });
-
-  responseStream.subscribe(
-    handleIncomingRepos,
-    error => console.log(error)
-  );
-
-}
-
 function handleIncomingRepos(data){
   const $content = $('#content');
 
@@ -57,4 +29,25 @@ function loadAndDisplayReadme(repo){
 
 }
 
-$( does => queryGithub('language:javascript stars:>50'));
+function init(){
+  const $content = $('#content');
+  var gh = new Github();
+  gh.next(handleIncomingRepos);
+
+  Rx.Observable.fromEvent($content, 'scroll')
+  .throttle(1000)
+  .takeWhile(gh.isNotWaiting)
+  .subscribe(scrollHandler);
+
+  function scrollHandler(){
+    //$content.scrollTop();
+    if ($content.scrollTop() + 2500 > $('#content .repoListItem').length * 100){
+      gh.next(handleIncomingRepos);
+    }
+  }
+}
+
+
+
+$(() => init());
+//$( does => queryGithub('language:javascript stars:>50'));
