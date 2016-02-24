@@ -1,8 +1,13 @@
 'use strict'
 
-class Github {
+class RepoSearch {
   constructor(){
-    this.url = 'https://api.github.com/search/repositories?q=language:javascript stars:>50&sort=updated';
+    this.url = this._buildQuery({
+      sort: 'updated',
+      language: 'javascript',
+      stars: '>50',
+      search: 'tetris'
+    })
     this.nexturl = this.url;
     this.waiting = false;
   }
@@ -19,8 +24,11 @@ class Github {
   }
 
   _next(){
+    if(!this.nexturl) return Rx.Observable.empty();
     this.waiting = true;
     this.url = this.nexturl;
+    this.nexturl = null;
+
     var observableUrl = Rx.Observable.just(this.url);
 
     return observableUrl.flatMap(url => {
@@ -64,5 +72,24 @@ class Github {
       }
       return result;
     });
+  }
+
+  _buildQuery(params){
+    var query = '?q=',
+        end = '',
+        search;
+
+    for(var key in params){
+      if(key === 'sort'){
+        end += '&sort=' + params[key];
+      } else if(key === 'order'){
+        end += '&order=' + params[key];
+      } else if(key === 'search'){
+        search = params[key];
+      } else {
+        query += key + ':' + params[key] + ' ';
+      }
+    }
+    return 'https://api.github.com/search/repositories' + query + ' ' + search + end;
   }
 }

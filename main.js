@@ -17,10 +17,10 @@ function handleIncomingRepos(data){
 function loadAndDisplayReadme(repo){
   const $readme = $('#readme');
 
-  var readmeStream = Rx.Observable.just('https://api.github.com/repos/' + repo.name + '/readme')
+  var readmeObservable = Rx.Observable.just('https://api.github.com/repos/' + repo.name + '/readme')
   .flatMap(url => $.getJSON(url));
 
-  readmeStream.subscribe(
+  readmeObservable.subscribe(
     data => $readme
             .empty()
             .append(marked(atob(data.content))),
@@ -31,23 +31,19 @@ function loadAndDisplayReadme(repo){
 
 function init(){
   const $content = $('#content');
-  var gh = new Github();
-  gh.next(handleIncomingRepos);
+  var search = new RepoSearch();
+  search.next(handleIncomingRepos);
 
   Rx.Observable.fromEvent($content, 'scroll')
   .throttle(1000)
-  .takeWhile(gh.isNotWaiting)
+  .takeWhile(search.isNotWaiting)
   .subscribe(scrollHandler);
 
   function scrollHandler(){
-    //$content.scrollTop();
     if ($content.scrollTop() + 2500 > $('#content .repoListItem').length * 100){
-      gh.next(handleIncomingRepos);
+      search.next(handleIncomingRepos);
     }
   }
 }
 
-
-
 $(() => init());
-//$( does => queryGithub('language:javascript stars:>50'));
