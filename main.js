@@ -1,8 +1,9 @@
+const ACCESS_TOKEN = '73b3b27673991e5876e70174744a0e4d35b09642';
+
 function handleIncomingRepos(data){
-  const $content = $('#content');
 
   $.each(data.items, (index, item) => {
-    $content.append('<div class="repoListItem">' + item.language
+    $('#content').append('<div class="repoListItem">' + item.language
                     + ' | <a href="#">' + item.name + '</a><p>'
                     + item.description + '</p><div>');
 
@@ -15,18 +16,20 @@ function handleIncomingRepos(data){
 }
 
 function loadAndDisplayReadme(repo){
-  const $readme = $('#readme');
 
-  var readmeObservable = Rx.Observable.just('https://api.github.com/repos/' + repo.name + '/readme')
+  var readmeObservable = Rx.Observable.just('https://api.github.com/repos/' + repo.name + '/readme?access_token=' + ACCESS_TOKEN)
   .flatMap(url => $.getJSON(url));
 
   readmeObservable.subscribe(
-    data => $readme
-            .empty()
-            .append(marked(atob(data.content))),
+    data => {
+      $('#readme')
+      .empty()
+      .append(marked(atob(data.content)));
+      console.log('scroll');
+      $('.scrollable').animate({ scrollTop: 0 }, 0);
+    },
     error => console.log(error)
   )
-
 }
 
 function init(){

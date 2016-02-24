@@ -6,7 +6,7 @@ class RepoSearch {
       sort: 'updated',
       language: 'javascript',
       stars: '>50',
-      search: 'cool'
+      search: 'javascript'
     })];
     this.waiting = false;
     this.endOfCurrentSearch = false;
@@ -93,6 +93,6 @@ class RepoSearch {
         query += key + ':' + params[key] + ' ';
       }
     }
-    return 'https://api.github.com/search/repositories' + query + ' ' + search + end;
+    return 'https://api.github.com/search/repositories' + query + ' ' + search + end + '&access_token=' + ACCESS_TOKEN;
   }
 }

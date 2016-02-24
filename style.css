@@ -16,17 +16,28 @@
   float:left;
   height: 100%
 }
-#readme {
-  color: white;
-  background-color: #333;
+
+#readmeWrapper {
+  color: #080808;
+  background-color: #f8f8f8;
   margin: 0;
   overflow:auto;
   width:50%;
   float:left;
   height: 100%
 }
+
+#readme {
+  padding: 5px;
+}
+
 #querytext {
   position: fixed;
+}
+#navbar{
+  width: 100%;
+  min-height: 50px;
+  background-color: #333;
 }
 div {
   padding: 0;
