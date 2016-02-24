@@ -40,7 +40,7 @@ function init(){
   .subscribe(scrollHandler);
 
   function scrollHandler(){
-    if ($content.scrollTop() + 2500 > $('#content .repoListItem').length * 100){
+    if ($content.scrollTop() + 2000 > $('#content .repoListItem').length * 100){
       search.next(handleIncomingRepos);
     }
   }

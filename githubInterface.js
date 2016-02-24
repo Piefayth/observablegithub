@@ -2,14 +2,14 @@
 
 class RepoSearch {
   constructor(){
-    this.url = this._buildQuery({
+    this.urls = [this._buildQuery({
       sort: 'updated',
       language: 'javascript',
       stars: '>50',
-      search: 'tetris'
-    })
-    this.nexturl = this.url;
+      search: 'cool'
+    })];
     this.waiting = false;
+    this.endOfCurrentSearch = false;
   }
 
   isNotWaiting(){
@@ -24,22 +24,18 @@ class RepoSearch {
   }
 
   _next(){
-    if(!this.nexturl) return Rx.Observable.empty();
+    if(this.endOfCurrentSearch) return Rx.Observable.empty();
     this.waiting = true;
-    this.url = this.nexturl;
-    this.nexturl = null;
-
-    var observableUrl = Rx.Observable.just(this.url);
-
-    return observableUrl.flatMap(url => {
-      var request = $.getJSON(url, data => {
+    return Rx.Observable.from(this.urls)
+      .last()
+      .flatMap(url => {
+        var request = $.getJSON(url, data => {
         data.headers = this._parseHeaders(request.getAllResponseHeaders());
         data.items = this._pickContent(data.items);
+        this.waiting = false;
       });
-      this.waiting = false;
       return request;
-    });
-
+    })
   }
 
   _pickContent(items){
@@ -56,22 +52,29 @@ class RepoSearch {
   }
 
   _parseHeaders(rawHeaders){
-    return rawHeaders.split('\n')
+    var headers = rawHeaders.split('\n')
     .map(h => {
       var match = h.match(/([\w-]+)\:\s(.*)/);
-      var result = {};
+      var oneHeader = {};
       if(match) {
         if(match[1] === 'Link'){
-          this.nexturl = match[2].split(',')
+          var nextLink = match[2].split(',')
             .map(item => item.split('; '))
-            .filter(item => /next/.test(item[1]))
-            .pop()[0]
+            .filter(item => /next/.test(item[1]));
+          if(nextLink.length > 0){
+            nextLink = nextLink.pop()[0]
             .replace(/[<>]/g, '');
+            this.urls.push(nextLink);
+          } else {
+            this.endOfCurrentSearch = true;
+          }
         }
-        result[match[1]] = match[2];
+        oneHeader[match[1]] = match[2];
       }
-      return result;
+      return oneHeader;
     });
+
+    return headers;
   }
 
   _buildQuery(params){
