@@ -1,31 +1,77 @@
 .repoListItem {
-  padding: 5px;
-  min-height: 100px;
+  height: 155px;
+  padding: 15px;
+  margin: 0px;
+  overflow: hidden;
+  color: #292721;
 }
 
 .repoListItem:nth-child(even) {
-  background-color: #f8f8f8;
+  background-color: #FFF;
 }
+
+.repoListItem:nth-child(odd) {
+  background-color: #E8F5E6;
+}
+
+a:hover, a:active, a:visited, a:target, a:focus {
+  text-decoration: none;
+  color: #7F2E2D;
+}
+
+#readmeWrapper {
+  color: #080808;
+  background-color: #fff;
+  margin: 0;
+  overflow:auto;
+  width:65%;
+  float:left;
+  height: 100%
+}
+
+
+.repoListItemRight {
+  float: right;
+}
+
+.repoListItemLeft {
+  font-size: 12px;
+  float: left;
+}
+
+h2 {
+  padding-top: 20px;
+  text-align: left;
+}
+
+p {
+  text-align: left;
+}
+
+
+
+
 
 input {
   border: none;
   border-radius: 4px;
   float: left;
-  margin-top: 6px;
+  margin-top: 5px;
   margin-left: 6px;
   margin-right: 12px;
-  height: 17px;
+  height: 19px;
   padding-left: 3px;
+  width: 400px;
 }
 
 select {
   border: none;
   border-radius: 4px;
   float: left;
-  margin-top: 6px;
+  margin-top: 5px;
   margin-left: 6px;
   margin-right: 12px;
-  height: 17px;
+  height: 19px;
   padding-left: 3px;
 }
 
@@ -33,11 +79,13 @@ button {
   border: none;
   border-radius: 4px;
   float: left;
-  margin-top: 6px;
+  margin-top: 5px;
   margin-left: 6px;
   margin-right: 12px;
-  height: 17px;
+  width: 50px;
+  height: 19px;
   padding-left: 3px;
+  padding-bottom: 13px;
 }
 
 button:hover {
@@ -54,27 +102,17 @@ label {
 }
 
 #content {
-  width: 50%;
+  width: 35%;
   top: 0px;
   left: 0px;
   overflow:auto;
-  width:50%;
   float:left;
   height: 100%
 }
 
-#readmeWrapper {
-  color: #080808;
-  background-color: #f8f8f8;
-  margin: 0;
-  overflow:auto;
-  width:50%;
-  float:left;
-  height: 100%
-}
 
 #readme {
-  padding: 5px;
+  padding: 55px;
 }
 
 #querytext {
@@ -85,6 +123,7 @@ label {
   min-height: 30px;
   background-color: #333;
 }
+
 div {
   padding: 0;
   margin: 0;

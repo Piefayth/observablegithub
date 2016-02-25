@@ -1,11 +1,15 @@
-const ACCESS_TOKEN = 'e024f744a2eb7145eebf3491ef4de795e82b2982';
+const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
 
 function handleIncomingRepos(data){
 
   $.each(data.items, (index, item) => {
-    $('#content').append('<div class="repoListItem">' + item.language
-                    + ' | <a href="#">' + item.name + '</a><p>'
-                    + item.description + '</p><div>');
+    // reactive as fuck
+    $('#content').append('<div class="repoListItem"><div class="repoListItemLeft">' + item.language
+                    + ' (<a href="' + item.url  + '">Source</a>)</div>'
+                    + '<div class="repoListItemRight">' + item.stars + ' Stars | '
+                    + item.forks + ' Forks</div></br></br><p>'
+                    + '<h3><a href="#">' + item.name + '</a></h3></p><p>'
+                    + item.description + '</p></div>');
 
     var $link = $('.repolistItem:last-child a');
     Rx.Observable.fromEvent($link, 'click')
@@ -24,11 +28,14 @@ function loadAndDisplayReadme(repo){
     data => {
       $('#readme')
       .empty()
-      .append(marked(atob(data.content)));
-      console.log('scroll');
+      .append(marked(decodeURIComponent(escape(atob(data.content)))));
       $('.scrollable').animate({ scrollTop: 0 }, 0);
     },
-    error => console.log(error)
+    error => {
+      $('#readme')
+      .empty()
+      .append('<div id="sorry">Couldn\'t seem to find a Readme.</div>');
+    }
   )
 }
 

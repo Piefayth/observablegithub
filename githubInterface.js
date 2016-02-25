@@ -6,7 +6,7 @@ class RepoSearch {
       sort: 'stars',
       language: 'javascript',
       stars: '<200',
-      pushed: '>2016-01-13'
+      pushed: '>2016-02-22'
     })];
     this.waiting = false;
     this.endOfCurrentSearch = false;

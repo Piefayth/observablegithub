@@ -5,12 +5,13 @@
   <script src="rx.all.js"></script>
   <script src="githubInterface.js"></script>
   <script src="main.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
   </head>
   <body>
     <div id="navbar">
       <label>Query </label>
-      <input type="text" id="queryInput"></input>
+      <input type="text" id="queryInput" placeholder="language:javascript stars:<200 pushed:>2016-02-22"></input>
       <label>Sort</label>
       <select id="sortSelect">
         <option value="">Best</option>
@@ -21,9 +22,9 @@
       <label>Order </label>
       <select id="orderSelect">
         <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
+        <option value="desc" selected>Descending</option>
       </select>
-      <button id="searchButton"> Go </button>
+      <button class="" id="searchButton"> Go </button>
     </div>
     <div id="content">
     </div>
