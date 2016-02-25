@@ -1,4 +1,4 @@
-const ACCESS_TOKEN = '73b3b27673991e5876e70174744a0e4d35b09642';
+const ACCESS_TOKEN = 'e024f744a2eb7145eebf3491ef4de795e82b2982';
 
 function handleIncomingRepos(data){
 
@@ -36,6 +36,21 @@ function init(){
   const $content = $('#content');
   var search = new RepoSearch();
   search.next(handleIncomingRepos);
+
+  Rx.Observable.fromEvent($('#searchButton'), 'click')
+  .subscribe(searchHandler);
+
+  function searchHandler(){
+    var params = {
+      search: $('#queryInput').val(),
+      sort: $('#sortSelect').val(),
+      order: $('#orderSelect').val()
+    };
+
+    search.updateParams(params);
+    search.next(handleIncomingRepos);
+    $content.empty();
+  }
 
   Rx.Observable.fromEvent($content, 'scroll')
   .throttle(1000)

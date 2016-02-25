@@ -9,6 +9,21 @@
   </head>
   <body>
     <div id="navbar">
+      <label>Query </label>
+      <input type="text" id="queryInput"></input>
+      <label>Sort</label>
+      <select id="sortSelect">
+        <option value="">Best</option>
+        <option value="stars" selected>Stars</option>
+        <option value="forks">Forks</option>
+        <option value="updated">Updated</option>
+      </select>
+      <label>Order </label>
+      <select id="orderSelect">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <button id="searchButton"> Go </button>
     </div>
     <div id="content">
     </div>

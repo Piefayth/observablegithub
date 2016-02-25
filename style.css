@@ -7,6 +7,52 @@
   background-color: #f8f8f8;
 }
 
+input {
+  border: none;
+  border-radius: 4px;
+  float: left;
+  margin-top: 6px;
+  margin-left: 6px;
+  margin-right: 12px;
+  height: 17px;
+  padding-left: 3px;
+}
+
+select {
+  border: none;
+  border-radius: 4px;
+  float: left;
+  margin-top: 6px;
+  margin-left: 6px;
+  margin-right: 12px;
+  height: 17px;
+  padding-left: 3px;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  float: left;
+  margin-top: 6px;
+  margin-left: 6px;
+  margin-right: 12px;
+  height: 17px;
+  padding-left: 3px;
+}
+
+button:hover {
+  background-color: #f8f8f8;
+}
+
+label {
+  color: white;
+  float: left;
+  margin-top: 7px;
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 #content {
   width: 50%;
   top: 0px;
@@ -36,7 +82,7 @@
 }
 #navbar{
   width: 100%;
-  min-height: 50px;
+  min-height: 30px;
   background-color: #333;
 }
 div {

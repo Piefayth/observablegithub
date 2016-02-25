@@ -3,10 +3,10 @@
 class RepoSearch {
   constructor(){
     this.urls = [this._buildQuery({
-      sort: 'updated',
+      sort: 'stars',
       language: 'javascript',
-      stars: '>50',
-      search: 'javascript'
+      stars: '<200',
+      pushed: '>2016-01-13'
     })];
     this.waiting = false;
     this.endOfCurrentSearch = false;
@@ -14,6 +14,11 @@ class RepoSearch {
 
   isNotWaiting(){
     return !this.waiting;
+  }
+
+  updateParams(params){
+    this.urls = [this._buildQuery(params)];
+    this.waiting = false;
   }
 
   next(handler){
@@ -80,7 +85,7 @@ class RepoSearch {
   _buildQuery(params){
     var query = '?q=',
         end = '',
-        search;
+        search = '';
 
     for(var key in params){
       if(key === 'sort'){
